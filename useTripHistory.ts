@@ -3,6 +3,13 @@ import { SavedTrip, TripPlan, TripFormData } from './types';
 
 const STORAGE_KEY = 'journeygenie_trips';
 
+/**
+ * Custom React hook to manage saving, loading, and deleting
+ * trip itineraries for a specific user utilizing local storage.
+ * 
+ * @param {string | undefined} userEmail - The email of the currently authenticated user.
+ * @returns An object containing the user's history and management functions.
+ */
 export const useTripHistory = (userEmail: string | undefined) => {
   const [history, setHistory] = useState<SavedTrip[]>([]);
 
@@ -17,7 +24,7 @@ export const useTripHistory = (userEmail: string | undefined) => {
         const allTrips: SavedTrip[] = JSON.parse(saved);
         setHistory(allTrips.filter(t => t.userEmail === userEmail));
       } catch (e) {
-        console.error('Failed to parse trip history', e);
+        // console.error('Failed to parse trip history', e);
       }
     }
   }, [userEmail]);
@@ -39,7 +46,7 @@ export const useTripHistory = (userEmail: string | undefined) => {
       try {
         allTrips = JSON.parse(saved);
       } catch (e) {
-        console.error('Failed to parse trip history', e);
+        // console.error('Failed to parse trip history', e);
       }
     }
     
@@ -57,7 +64,7 @@ export const useTripHistory = (userEmail: string | undefined) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(allTrips));
         setHistory(allTrips.filter(t => t.userEmail === userEmail));
       } catch (e) {
-        console.error('Failed to parse trip history', e);
+        // console.error('Failed to parse trip history', e);
       }
     }
   }

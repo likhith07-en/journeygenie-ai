@@ -18,6 +18,13 @@ const getGenAI = () => {
   return new GoogleGenAI({ apiKey: process.env.API_KEY });
 }
 
+/**
+ * Analyzes the climate for a given trip's destinations and dates.
+ * Suggests an alternative travel window if the current one is not ideal.
+ * 
+ * @param {Pick<TripFormData, 'destinations' | 'startDate' | 'endDate'>} formData - Dates and locations.
+ * @returns {Promise<ClimateAnalysis>} The analysis result containing suitability and suggestions.
+ */
 export const analyzeClimateForTrip = async (formData: Pick<TripFormData, 'destinations' | 'startDate' | 'endDate'>): Promise<ClimateAnalysis> => {
   const ai = getGenAI();
   const destinationsText = formData.destinations.join(', ');
@@ -53,7 +60,7 @@ export const analyzeClimateForTrip = async (formData: Pick<TripFormData, 'destin
     return JSON.parse(jsonText);
 
   } catch (error) {
-    console.error("Error analyzing climate:", error);
+    // console.error("Error analyzing climate:", error);
     // Fail gracefully: assume the dates are fine so the user can proceed.
     return {
       isIdeal: true,
@@ -173,6 +180,14 @@ const itinerarySchema = {
   required: ["destination", "totalDays", "estimatedBudget", "dailyPlans", "packingList", "cuisineGuide", "culturalCheatSheet"],
 };
 
+/**
+ * Generates a full day-by-day travel itinerary using the Gemini API.
+ * Uses the user's constraints to provide personalized, localized plans.
+ * 
+ * @param {TripFormData} formData - The user-submitted trip preferences and details.
+ * @returns {Promise<TripPlan>} A structured trip plan.
+ * @throws {Error} If the API key is missing or itinerary generation fails.
+ */
 export const generateItinerary = async (formData: TripFormData): Promise<TripPlan> => {
   const ai = getGenAI();
 
@@ -223,7 +238,7 @@ export const generateItinerary = async (formData: TripFormData): Promise<TripPla
     return parsedData.trip ? parsedData.trip : parsedData;
 
   } catch (error) {
-    console.error("Error generating itinerary:", error);
+    // console.error("Error generating itinerary:", error);
     throw new Error("Failed to generate itinerary. The model may be unable to provide a plan for the selected destination or options.");
   }
 };
