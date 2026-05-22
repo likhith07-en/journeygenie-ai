@@ -14,8 +14,11 @@ const climateSchema = {
 };
 
 const getGenAI = () => {
-  // FIX: Per @google/genai guidelines, the API key must be read from process.env.API_KEY.
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("VITE_GEMINI_API_KEY is not set. Please set it in your environment variables.");
+  }
+  return new GoogleGenAI({ apiKey });
 }
 
 /**

@@ -23,7 +23,7 @@ import { AnimatedLoader } from './AnimatedLoader';
 const Footer: React.FC = () => (
     <footer className="w-full bg-white dark:bg-gray-800 shadow-inner mt-auto py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 dark:text-gray-400">
-            <p>&copy; {new Date().getFullYear()} UCEOU. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} JourneyGenie-AI. All rights reserved.</p>
         </div>
     </footer>
 );
@@ -81,7 +81,7 @@ const ClimateSuggestionModal: React.FC<ClimateSuggestionModalProps> = ({ suggest
                     disabled={isLoading}
                     className="px-6 py-3 rounded-lg text-white bg-blue-500 hover:bg-blue-600 font-semibold transition-colors flex items-center justify-center disabled:opacity-50"
                 >
-                     {isLoading && <ButtonSpinner />}
+                    {isLoading && <ButtonSpinner />}
                     Use Suggested Dates
                 </button>
             </div>
@@ -147,7 +147,7 @@ const WelcomePage: React.FC<PageProps> = ({ navigateTo }) => (
         <div className="absolute top-20 left-10 text-6xl opacity-20 animate-pulse">🏖️</div>
         <div className="absolute top-40 right-20 text-4xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}>🏔️</div>
         <div className="absolute bottom-20 left-20 text-5xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}>🏛️</div>
-        
+
         <div className="text-center text-white z-10 max-w-4xl mx-auto px-4">
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6 animate-fade-in-down">Your Journey, Reimagined</h1>
             <p className="text-lg md:text-xl mb-8 opacity-90 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
@@ -201,14 +201,14 @@ const SetupPage: React.FC<SetupPageProps> = ({ navigateTo, onGeneratePlan }) => 
         } else {
             setFormData(prev => ({ ...prev, [id]: value }));
         }
-        
+
         clearError(id);
         if (id === 'startDate' && value) {
-            setFormData(prev => ({...prev, endDate: ''}));
+            setFormData(prev => ({ ...prev, endDate: '' }));
             clearError('endDate');
         }
     };
-    
+
     const handleTravelStyleChange = (style: string) => {
         setFormData(prev => ({ ...prev, travelStyle: style }));
         clearError('travelStyle');
@@ -230,7 +230,7 @@ const SetupPage: React.FC<SetupPageProps> = ({ navigateTo, onGeneratePlan }) => 
             setDestinations(destinations.filter((_, i) => i !== index));
         }
     };
-    
+
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
         if (!formData.startCity.trim()) newErrors.startCity = "Please enter a starting city.";
@@ -249,8 +249,8 @@ const SetupPage: React.FC<SetupPageProps> = ({ navigateTo, onGeneratePlan }) => 
             return;
         }
         setErrors({});
-        onGeneratePlan({ 
-            ...formData, 
+        onGeneratePlan({
+            ...formData,
             destinations: destinations.filter(d => d.trim() !== ''),
             mustInclude,
             dontInclude,
@@ -271,7 +271,7 @@ const SetupPage: React.FC<SetupPageProps> = ({ navigateTo, onGeneratePlan }) => 
                             <input type="text" id="startCity" placeholder="e.g., Mumbai, India" value={formData.startCity} onChange={handleInputChange} className={`w-full px-4 py-3 border-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-lg ${errors.startCity ? 'border-red-500' : 'border-gray-200 dark:border-gray-600'}`} />
                             {errors.startCity && <p className="text-red-500 text-sm mt-1">{errors.startCity}</p>}
                         </div>
-                        
+
                         <div>
                             <div className="flex justify-between items-center mb-3">
                                 <label className="text-lg font-semibold text-gray-700 dark:text-gray-200">Destinations</label>
@@ -320,20 +320,20 @@ const SetupPage: React.FC<SetupPageProps> = ({ navigateTo, onGeneratePlan }) => 
                                     </div>
                                 ))}
                             </div>
-                             {errors.travelStyle && <p className="text-red-500 text-sm mt-1">{errors.travelStyle}</p>}
+                            {errors.travelStyle && <p className="text-red-500 text-sm mt-1">{errors.travelStyle}</p>}
                         </div>
 
                         <div className="space-y-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                             <div>
+                            <div>
                                 <label className="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Must-Include Places <span className="text-sm font-normal text-gray-500">(Optional)</span></label>
                                 <textarea id="mustInclude" placeholder="e.g., Eiffel Tower, Colosseum" value={mustInclude} onChange={handleInputChange} rows={2} className="w-full px-4 py-3 border-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-lg border-gray-200 dark:border-gray-600"></textarea>
                             </div>
-                             <div>
+                            <div>
                                 <label className="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Places to Avoid <span className="text-sm font-normal text-gray-500">(Optional)</span></label>
                                 <textarea id="dontInclude" placeholder="e.g., Crowded markets, tourist traps" value={dontInclude} onChange={handleInputChange} rows={2} className="w-full px-4 py-3 border-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-lg border-gray-200 dark:border-gray-600"></textarea>
                             </div>
                         </div>
-                        
+
                         <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-lg text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
                             Create My Itinerary ✨
                         </button>
@@ -368,7 +368,7 @@ const AboutPage: React.FC<PageProps> = ({ navigateTo }) => (
                     We believe that the journey begins the moment you start planning. With JourneyGenie, that beginning is inspiring, effortless, and filled with excitement for the adventure that lies ahead.
                 </p>
                 <div className="text-center pt-4">
-                     <button onClick={() => navigateTo('setup')} className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <button onClick={() => navigateTo('setup')} className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
                         Plan Your First Trip
                     </button>
                 </div>
@@ -426,14 +426,14 @@ const App: React.FC = () => {
     const toggleTheme = () => {
         setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
     };
-    
+
     const navigateTo = useCallback((newPage: Page) => {
-      if (newPage === 'visualization' && !tripPlan) {
-        setPage('setup');
-        return;
-      }
-      setPage(newPage);
-      window.scrollTo(0, 0);
+        if (newPage === 'visualization' && !tripPlan) {
+            setPage('setup');
+            return;
+        }
+        setPage(newPage);
+        window.scrollTo(0, 0);
     }, [tripPlan]);
 
     const proceedToGenerateItinerary = useCallback(async (formData: TripFormData) => {
@@ -461,7 +461,7 @@ const App: React.FC = () => {
         setIsLoading(true);
         setError(null);
         setLoadingMessage("Checking climate...");
-        
+
         try {
             const climateAnalysis = await analyzeClimateForTrip(formData);
             if (climateAnalysis.isIdeal) {
@@ -501,7 +501,7 @@ const App: React.FC = () => {
         setSelectedDay(day);
         navigateTo('dayDetails');
     }, [navigateTo]);
-    
+
     const handleSignOut = async () => {
         await supabase.auth.signOut();
         navigateTo('welcome');
@@ -538,12 +538,12 @@ const App: React.FC = () => {
                 return <WelcomePage navigateTo={navigateTo} />;
         }
     };
-    
+
     return (
         <div className="flex flex-col min-h-screen">
             {isLoading && !climateSuggestion && <AnimatedLoader message={loadingMessage} />}
             {climateSuggestion && (
-                 <ClimateSuggestionModal 
+                <ClimateSuggestionModal
                     suggestion={climateSuggestion}
                     onConfirm={handleConfirmSuggestion}
                     onCancel={handleCancelSuggestion}
@@ -554,7 +554,7 @@ const App: React.FC = () => {
             <main className="flex-grow transition-all duration-300 ease-in-out opacity-100 animate-[fadeIn_0.5s_ease-out]">
                 {page === 'setup' && (
                     <div className="fixed top-16 w-full z-40 px-4">
-                       {error && (
+                        {error && (
                             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
                                 <p className="font-bold">Oops!</p>
                                 <p>{error}</p>
